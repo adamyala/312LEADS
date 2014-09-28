@@ -2,7 +2,6 @@ import requests
 import sqlite3
 import inspect, os
 
-
 from flask import Flask, render_template, request, g
 from flask.ext.mail import Mail, Message
 app = Flask(__name__)
@@ -24,10 +23,6 @@ def connect_to_database():
 
 @app.route("/")
 def main():
-	# g.db = connect_to_database()
-	# current = g.db.execute('select * from violations')
-	# subjects = current.fetchall()
-	# print subjects
 	return render_template('index.html')
 
 import ast
@@ -59,54 +54,61 @@ def email_dump(leads):
 	i = (subject['zipcode'],)
 	tempbusinesses = g.db.execute("SELECT * FROM business WHERE zipcode=?", i)
 
-	j = jobdict[subject['occupation']][2]
-	# violations = []
-	# for code in j:
-		# print code
-	tempviolations = g.db.execute("SELECT * FROM violations WHERE violationnum=?", [j])
+	violations = []
+	j = jobdict[subject['occupation']]
+	for code in j:
+		tempviolations = g.db.execute("SELECT * FROM violations WHERE violationnum=?", [code]).fetchall()
+
+		violationspart = [list(row) for row in tempviolations]
+
+		# for row in violationspart:
+			# print row
+			# violations = violations.append(row)
+
+
+
+
+
+
+		# tempviolations = tempviolations.fetchall()
+		# print violations
+		# for row in tempviolations:
+		# 	print row
+		# 	cheese = [""] * len(list(row))
+		# 	for mold in range(len(list(row))):
+		# 		print mold
+		# 		cheese[mold] = "" + list(row)[mold]
+		# 	violations = violations.append(cheese)
+		# 	print cheese
+		# 	print violations
+		# 	# print list(row)
+		# # violations = violations.append([list(row) for row in tempviolations])
+
 		# violations = violations.append(ast.literal_eval(tempvio))
 	# businesses = g.db.execute("SELECT * FROM violations WHERE violationnum IN (?)", (j,))
 	# businesses = g.db.execute("SELECT * FROM violations WHERE violationnum IN ()")
 
 	businesses = tempbusinesses.fetchall()
-	violations = tempviolations.fetchall()
-
-	print businesses
-	# print violations
+	# violations = tempviolations.fetchall()
 
 	result = []
 	businesses = [list(row) for row in businesses]
-	violations = [list(row) for row in violations]
-	print len(violations)
+	# violations = [list(row) for row in violations]
 	for biz in businesses:
 		result.append(biz[0]+" - "+biz[2]+biz[3])
-		print result
 		for vio in violations:
 			temp = "" + vio[0]
 			if biz[1] == temp:
 				result.append("  - "+vio[2])
 
 	print 'started function'
-	msg = Message("Hello", sender="from@example.com", recipients=["adamkyala@gmail.com"])
+	msg = Message("Your Leads", sender="leads@312LEADS.com", recipients=[subject['email']])
 	print 'made email'
 	msg.body = ''.join(result)
-	mail.send(msg)
+	# mail.send(msg)
 	print 'sent email'
 
-
-	# print businesses
-
-	# for biz in businesses:
-	# 	print biz[0]
-	# 	result = result.append(biz[0])
-	# 	print result
-	# 	for vio in violations:
-	# 		if biz[1] == vio[0]:
-	# 			result = result.append(vio[0])
-	# 			print result
-
-	# leads = result.fetchall()
-	return render_template('thankyou.html')
+	return render_template('email_dump.html', leads=result)
 
 if __name__ == "__main__":
 	app.debug = True

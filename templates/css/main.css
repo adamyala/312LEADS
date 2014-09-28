@@ -8,13 +8,8 @@ Color scheme: Blue #3399FF | Light Blue #95CAFE | Red #CC0202 | Light Red #DF606
 
 .top-bit {
 	background-color: #DF6060;
-	height: 5%;
+	height: 30px;
 }
-
-/*.bottom {
-	background-color: #95CAFE;
-	height: 5%;
-}*/
 
 .alignment {
 	margin-left: auto;
@@ -25,21 +20,13 @@ Color scheme: Blue #3399FF | Light Blue #95CAFE | Red #CC0202 | Light Red #DF606
 .input-group-abc {
 	margin-left: auto;
 	margin-right: auto;
-	padding-left: 33%;
-	padding-right: 33%;
-	/*padding-top: 2%;*/
+}
+
+.alert.alert-success.flash {
+	position: relative;
+	top: 20px;
 }
 
 .leads {
 	padding-top: 2%;
 }
-
-.submit {
-	padding-top: 2%;
-}
-
-/*.email {
-	padding-left: 33%;
-	padding-right: 33%;
-	padding-top: 2%;
-}*/
