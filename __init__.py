@@ -18,6 +18,7 @@ def main():
 	# print subjects
 	return render_template('index.html')
 
+import ast
 @app.route('/email_dump/<leads>', methods=['GET', 'POST'])
 @app.route('/email_dump/', defaults={'leads': None}, methods=['GET', 'POST'])
 def email_dump(leads):
@@ -42,17 +43,51 @@ def email_dump(leads):
 		for field in request.form:
 			subject[field] = request.form[field]
 	g.db = connect_to_database()
+
 	i = (subject['zipcode'],)
-	j = jobdict[subject['occupation']]
-	print j
-	businesses = g.db.execute("SELECT * FROM business WHERE zipcode=?", i)
-	for code in j:
-		print code
-		violations = g.db.execute("SELECT * FROM violations WHERE violationnum IN (?)", code)
+	tempbusinesses = g.db.execute("SELECT * FROM business WHERE zipcode=?", i)
+
+	j = jobdict[subject['occupation']][2]
+	# violations = []
+	# for code in j:
+		# print code
+	tempviolations = g.db.execute("SELECT * FROM violations WHERE violationnum=?", [j])
+		# violations = violations.append(ast.literal_eval(tempvio))
 	# businesses = g.db.execute("SELECT * FROM violations WHERE violationnum IN (?)", (j,))
 	# businesses = g.db.execute("SELECT * FROM violations WHERE violationnum IN ()")
-	leads = violations.fetchall()
-	return render_template('email_dump.html', leads=leads)
+
+	businesses = tempbusinesses.fetchall()
+	violations = tempviolations.fetchall()
+
+	print businesses
+	# print violations
+
+	result = []
+	businesses = [list(row) for row in businesses]
+	violations = [list(row) for row in violations]
+	print len(violations)
+	for biz in businesses:
+		result.append(biz[0]+" - "+biz[2]+biz[3])
+		print result
+		for vio in violations:
+			temp = "" + vio[0]
+			if biz[1] == temp:
+				result.append("  - "+vio[2])
+
+
+	# print businesses
+
+	# for biz in businesses:
+	# 	print biz[0]
+	# 	result = result.append(biz[0])
+	# 	print result
+	# 	for vio in violations:
+	# 		if biz[1] == vio[0]:
+	# 			result = result.append(vio[0])
+	# 			print result
+
+	# leads = result.fetchall()
+	return render_template('email_dump.html', leads=result)
 
 if __name__ == "__main__":
 	app.debug = True
