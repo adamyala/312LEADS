@@ -1,12 +1,156 @@
-<!-- {%- for lead in leads recursive %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>312LEADS</title>
 
-	{{lead[0] + " at " + lead[2] + " " + lead[3]}}
-	</br>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+    </script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-{%- endfor -%} -->
-{%- for lead in leads recursive %}
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
 
-	{{lead}}
-	</br>
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/cover/cover.css" rel="stylesheet">
+    <style id="holderjs-style" type="text/css"></style>
 
-{%- endfor -%}
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+        	<div class="cover-container">
+            <div class="top-bit"></div>
+            <div class="alert alert-success flash" role="alert">
+      			<strong>Awesome, we've sent some free leads your way!</strong> 
+    		</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alignment">
+                        <div class="inner cover">
+                            <h1 class="cover-heading"><b>312</b>LEADS</h1>
+                            <form role="form" name="input" action="/email_dump/" method="POST">
+                                <div class="form-group input-group-abc">
+                                    <select class="form-control" name="occupation">
+                                        <option class="default">I am a...</option>
+                                        <option value="Food Wholesaler">Food Wholesaler</option>
+                                        <option value="Restaurant Supply Company">Restaurant Supply Company</option>
+                                        <option value="HVAC Company/Refrigeration Supply">HVAC Company/Refrigeration Supply</option>
+                                        <option value="Pharmacy">Pharmacy</option>
+                                        <option value="Construction Company">Construction Company</option>
+                                        <option value="Electrician">Electrician</option>
+                                        <option value="Staffing Agency">Staffing Agency</option>
+                                        <option value="Restaurant Consulting">Restaurant Consulting</option>
+                                        <option value="Appliance Repair Company">Appliance Repair Company</option>
+                                        <option value="Property Management Company">Property Management Company</option>
+                                        <option value="Waste Management Company">Waste Management Company</option>
+                                        <option value="Pest Control Company">Pest Control Company</option>
+                                        <option value="Plumbing Company">Plumbing Company</option>
+                                    </select>
+                                </div>
+                                <div class="form-group input-group-abc">
+                                    <select class="form-control" name="zipcode">
+                                        <option class="default">Looking for leads in...</option>
+                                        <option value="60007">60007</option>
+                                        <option value="60108">60108</option>
+                                        <option value="60126">60126</option>
+                                        <option value="60193">60193</option>
+                                        <option value="60409">60409</option>
+                                        <option value="60601">60601</option>
+                                        <option value="60602">60602</option>
+                                        <option value="60603">60603</option>
+                                        <option value="60604">60604</option>
+                                        <option value="60605">60605</option>
+                                        <option value="60606">60606</option>
+                                        <option value="60607">60607</option>
+                                        <option value="60608">60608</option>
+                                        <option value="60609">60609</option>
+                                        <option value="60610">60610</option>
+                                        <option value="60611">60611</option>
+                                        <option value="60612">60612</option>
+                                        <option value="60613">60613</option>
+                                        <option value="60614">60614</option>
+                                        <option value="60615">60615</option>
+                                        <option value="60616">60616</option>
+                                        <option value="60617">60617</option>
+                                        <option value="60618">60618</option>
+                                        <option value="60619">60619</option>
+                                        <option value="60620">60620</option>
+                                        <option value="60621">60621</option>
+                                        <option value="60622">60622</option>
+                                        <option value="60623">60623</option>
+                                        <option value="60624">60624</option>
+                                        <option value="60625">60625</option>
+                                        <option value="60626">60626</option>
+                                        <option value="60628">60628</option>
+                                        <option value="60629">60629</option>
+                                        <option value="60630">60630</option>
+                                        <option value="60631">60631</option>
+                                        <option value="60632">60632</option>
+                                        <option value="60633">60633</option>
+                                        <option value="60634">60634</option>
+                                        <option value="60636">60636</option>
+                                        <option value="60637">60637</option>
+                                        <option value="60638">60638</option>
+                                        <option value="60639">60639</option>
+                                        <option value="60640">60640</option>
+                                        <option value="60641">60641</option>
+                                        <option value="60642">60642</option>
+                                        <option value="60643">60643</option>
+                                        <option value="60644">60644</option>
+                                        <option value="60645">60645</option>
+                                        <option value="60646">60646</option>
+                                        <option value="60647">60647</option>
+                                        <option value="60649">60649</option>
+                                        <option value="60651">60651</option>
+                                        <option value="60652">60652</option>
+                                        <option value="60653">60653</option>
+                                        <option value="60654">60654</option>
+                                        <option value="60655">60655</option>
+                                        <option value="60656">60656</option>
+                                        <option value="60657">60657</option>
+                                        <option value="60659">60659</option>
+                                        <option value="60660">60660</option>
+                                        <option value="60661">60661</option>
+                                        <option value="60666">60666</option>
+                                        <option value="60707">60707</option>
+                                        <option value="60804">60804</option>
+                                        <option value="60827">60827</option>
+                                    </select>
+                                </div>
+                                <div class="leads form-group input-group-abc">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">@</span>
+                                        <input name="email" type="email" class="form-control" placeholder="Email" required />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-lg btn-default">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="mastfoot">
+                        <div class="inner">
+                            <p>Created at the MonkeyBars Open Build Hackathon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom"></div>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
