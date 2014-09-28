@@ -7,12 +7,12 @@ from flask.ext.mail import Mail, Message
 app = Flask(__name__)
 app.config.update(dict(
     DEBUG = True,
-    MAIL_SERVER = 'smtp.sendgrid.net',
+    MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'azure_bedae6f1889ca6f6048eee57c8e6b6c2@azure.com',
-    MAIL_PASSWORD = 'xjyV3jdU42InanO',
+    MAIL_USERNAME = 'adam@adamyala.com',
+    MAIL_PASSWORD = 'XXX',
 ))
 
 mail = Mail(app)
@@ -102,7 +102,29 @@ def email_dump(leads):
 				result.append("  - "+vio[2])
 
 	print 'started function'
-	msg = Message("Your Leads", sender="leads@312LEADS.com", recipients=[subject['email']])
+	msg = Message("Your Leads", sender="leads@312LEADS.com",
+		html="""<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+	<tr>
+		<td bgcolor="#DF6060" style="padding: 15px 15px 15px 15px;">
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#333" style="text-align:center; color:white">
+			<h1><strong>312</strong>LEADS</h1>
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#333" style="color:white; text-align:left">
+
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#333" style="text-align:center; color:#999; padding: 15px 15px 15px 15px;">
+			Created at the MonkeyBars Open Build Hackathon
+		</td>
+	</tr>
+</table>""",
+		recipients=[subject['email']])
 	print 'made email'
 	msg.body = ''.join(result)
 	# mail.send(msg)
