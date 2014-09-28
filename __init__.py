@@ -4,7 +4,19 @@ import inspect, os
 
 
 from flask import Flask, render_template, request, g
+from flask.ext.mail import Mail, Message
 app = Flask(__name__)
+app.config.update(dict(
+    DEBUG = True,
+    MAIL_SERVER = 'smtp.sendgrid.net',
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USE_SSL = False,
+    MAIL_USERNAME = 'azure_bedae6f1889ca6f6048eee57c8e6b6c2@azure.com',
+    MAIL_PASSWORD = 'xjyV3jdU42InanO',
+))
+
+mail = Mail(app)
 
 app.database = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + '/abcproject.db'
 def connect_to_database():
@@ -74,6 +86,13 @@ def email_dump(leads):
 			if biz[1] == temp:
 				result.append("  - "+vio[2])
 
+	print 'started function'
+	msg = Message("Hello", sender="from@example.com", recipients=["adamkyala@gmail.com"])
+	print 'made email'
+	msg.body = ''.join(result)
+	mail.send(msg)
+	print 'sent email'
+
 
 	# print businesses
 
@@ -87,7 +106,7 @@ def email_dump(leads):
 	# 			print result
 
 	# leads = result.fetchall()
-	return render_template('email_dump.html', leads=result)
+	return render_template('thankyou.html')
 
 if __name__ == "__main__":
 	app.debug = True
