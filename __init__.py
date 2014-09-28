@@ -42,12 +42,16 @@ def email_dump(leads):
 		for field in request.form:
 			subject[field] = request.form[field]
 	g.db = connect_to_database()
-	# current = g.db.execute('select * from business where zipcode=subject["zipcode"]')
-	t = (subject['zipcode'],)
-	# print t
-	current = g.db.execute("SELECT * FROM business WHERE zipcode=?", t)
-	leads = current.fetchall()	
-	# print leads
+	i = (subject['zipcode'],)
+	j = jobdict[subject['occupation']]
+	print j
+	businesses = g.db.execute("SELECT * FROM business WHERE zipcode=?", i)
+	for code in j:
+		print code
+		violations = g.db.execute("SELECT * FROM violations WHERE violationnum IN (?)", code)
+	# businesses = g.db.execute("SELECT * FROM violations WHERE violationnum IN (?)", (j,))
+	# businesses = g.db.execute("SELECT * FROM violations WHERE violationnum IN ()")
+	leads = violations.fetchall()
 	return render_template('email_dump.html', leads=leads)
 
 if __name__ == "__main__":

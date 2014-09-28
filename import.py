@@ -35,19 +35,12 @@ with sqlite3.connect(main_dir + '/abcproject.db') as connection:
 
 		c.execute("""INSERT INTO business VALUES(?,?,?,?,?)""", (violation['dba_name'],violation['license_'],violation['address'] + 'CHICAGO IL', zipcode, facility))
 
-		# print violation['dba_name']
-
 		try:
 			comments = violation['violations'].rsplit('|')
-
-			# print violation['license_']
-			# print violation['inspection_date'][0:violations[0]['inspection_date'].find('T')]
 
 			for line in comments:
 				c.execute("""INSERT INTO violations VALUES(?,?,?,?)""", (violation['license_'], violation['inspection_date'][0:violations[0]['inspection_date'].find('T')], line[line.find('Comments:')+9:].strip(), line.strip()[0:2].rstrip('.')))
 				
-
-				# print line[line.find('Comments:')+9:].strip()
 		except:
 			pass
 
