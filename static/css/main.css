@@ -1,0 +1,45 @@
+/*
+Color scheme: Blue #3399FF | Light Blue #95CAFE | Red #CC0202 | Light Red #DF6060 | White #F4F4F4
+*/
+
+.cover-heading {
+	font-size: 400%;
+}
+
+.top-bit {
+	background-color: #DF6060;
+	height: 5%;
+}
+
+/*.bottom {
+	background-color: #95CAFE;
+	height: 5%;
+}*/
+
+.alignment {
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+}
+
+.input-group-abc {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 33%;
+	padding-right: 33%;
+	/*padding-top: 2%;*/
+}
+
+.leads {
+	padding-top: 2%;
+}
+
+.submit {
+	padding-top: 2%;
+}
+
+/*.email {
+	padding-left: 33%;
+	padding-right: 33%;
+	padding-top: 2%;
+}*/
