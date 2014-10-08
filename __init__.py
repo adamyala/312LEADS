@@ -13,8 +13,8 @@ app.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'azure_c49eb65c111aa3e4526967bdbd38af9d@azure.com',
-    MAIL_PASSWORD = 'lT12x6P86P3GzsN',
+    MAIL_USERNAME = '',
+    MAIL_PASSWORD = '',
 ))
 
 mail = Mail(app)
