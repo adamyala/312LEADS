@@ -42,18 +42,18 @@ import ast
 def email_dump(leads):
 
 	jobdict = {
-		'Food Wholesaler': '1',
-		'Restaurant Supply Company': ['1', '2', '4', '6'],
-		'HVAC Company/Refrigeration Supply': ['2', '3'],
-		'Pharmacy': '5',
-		'Construction Company': ['11', '26', '34', '35', '36', '37', '38'],
-		'Electrician': ['2', '17', '22', '36'],
-		'Staffing Agency': ['21', '23', '27', '31', '33', '41', '42', '44', '70'],
-		'Appliance Repair Company': ['2', '3'],
-		'Property Management Company': ['19'],
-		'Waste Management Company': ['19','20'],
-		'Pest Control Company': ['18','23'],
-		'Plumbing Company': ['7', '9', '10', '11', '12', '22', '24', '26', '27', '38']
+		'Food Wholesaler': ('1'),
+		'Restaurant Supply Company': ('1', '2', '4', '6'),
+		'HVAC Company/Refrigeration Supply': ('2', '3'),
+		'Pharmacy': ('5'),
+		'Construction Company': ('11', '26', '34', '35', '36', '37', '38'),
+		'Electrician': ('2', '17', '22', '36'),
+		'Staffing Agency': ('21', '23', '27', '31', '33', '41', '42', '44', '70'),
+		'Appliance Repair Company': ('2', '3'),
+		'Property Management Company': ('19'),
+		'Waste Management Company': ('19','20'),
+		'Pest Control Company': ('18','23'),
+		'Plumbing Company': ('7', '9', '10', '11', '12', '22', '24', '26', '27', '38')
 	}
 
 	if request.method == 'POST':
@@ -82,7 +82,7 @@ def email_dump(leads):
 		# only take businesses that match zip
 		# stop at 10
 
-	result = []
+	# result = []
 	# for biz in bizlist:
 	# 	print 'biz is' + biz
 	# 	for violation in violations:
@@ -127,66 +127,71 @@ def email_dump(leads):
 	# 	if violations[9] == subject['zipcode'] and violations[3] in codelist:
 	# 		result = result.apprend(violations[1] + ' - ' + violations[6] + ' CHICAGO IL')
 
+	i = subject['zipcode']
+	businessSQL = "SELECT * FROM business WHERE zipcode = " + str(i)
+	businesses = g.db.execute(businessSQL).fetchall()
+	# result = businesses
 
-
-	i = (subject['zipcode'].encode('ascii','ignore'),)
-	print i
-	tempbusinesses = g.db.execute("SELECT * FROM business WHERE zipcode='60609'")#?", i)
-	businesses = tempbusinesses.fetchall()
-	print businesses
+	# i = (subject['zipcode'].encode('ascii','ignore'),)
+	# print i
+	# tempbusinesses = g.db.execute("SELECT * FROM business WHERE zipcode='60609'")#?", i)
+	# businesses = tempbusinesses.fetchall()
+	# print businesses
 
 	# violations = []
 	j = jobdict[subject['occupation']]
-	for code in j:
-		violations = g.db.execute("SELECT * FROM violations WHERE violationnum=?", [code]).fetchall()
-		for row in violations:
-			row = list(row)
-			for vio in row:
-				vio = vio.encode('ascii','ignore')
+	violationsSQL = "SELECT * FROM violations WHERE violationnum IN " + str(j)
+	violations = g.db.execute(violationsSQL).fetchall()
 
-	result = []
-	businesses = [list(row) for row in businesses]
-	for biz in businesses:
-		result.append(biz[0]+" - "+biz[2]+biz[3])
-		for vio in violations:
-			temp = vio[0]
-			if biz[1] == temp:
-				result.append("  - "+vio[2])
+	result = {}
 
-	emailmess = """
-			<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-				<tr>
-					<td bgcolor="#DF6060" style="padding: 15px 15px 15px 15px;">
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#333" style="text-align:center; color:white">
-						<h1><strong>312</strong>LEADS</h1>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#333" style="color:white; text-align:left; padding-left: 5%; padding-right: 5%; padding-bottom: 2%">"""
+	for business in businesses:
+		result = [business]
 
-	for row in result:
-		emailmess = emailmess + """<p style="color:white">""" + row + "</p>"
+	# result = []
+	# businesses = [list(row) for row in businesses]
+	# for biz in businesses:
+	# 	result.append(biz[0]+" - "+biz[2]+biz[3])
+	# 	for vio in violations:
+	# 		temp = vio[0]
+	# 		if biz[1] == temp:
+	# 			result.append("  - "+vio[2])
 
-	emailmess = emailmess + """					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#333" style="text-align:center; color:#999; padding: 15px 15px 15px 15px;">
-						Created at the MonkeyBars Open Build Hackathon
-					</td>
-				</tr>
-			</table>
-		"""
+	# emailmess = """
+	# 		<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+	# 			<tr>
+	# 				<td bgcolor="#DF6060" style="padding: 15px 15px 15px 15px;">
+	# 				</td>
+	# 			</tr>
+	# 			<tr>
+	# 				<td bgcolor="#333" style="text-align:center; color:white">
+	# 					<h1><strong>312</strong>LEADS</h1>
+	# 				</td>
+	# 			</tr>
+	# 			<tr>
+	# 				<td bgcolor="#333" style="color:white; text-align:left; padding-left: 5%; padding-right: 5%; padding-bottom: 2%">"""
 
-	msg = Message("Your Leads", sender="leads@312LEADS.com",
-		html=emailmess,
-		recipients=[subject['email']])
-	msg.body = ''.join(result)
-	mail.send(msg)
+	# for row in result:
+	# 	emailmess = emailmess + """<p style="color:white">""" + row + "</p>"
 
-	return render_template('email_dump.html')
+	# emailmess = emailmess + """					</td>
+	# 			</tr>
+	# 			<tr>
+	# 				<td bgcolor="#333" style="text-align:center; color:#999; padding: 15px 15px 15px 15px;">
+	# 					Created at the MonkeyBars Open Build Hackathon
+	# 				</td>
+	# 			</tr>
+	# 		</table>
+	# 	"""
+
+	# msg = Message("Your Leads", sender="leads@312LEADS.com",
+	# 	html=emailmess,
+	# 	recipients=[subject['email']])
+	# msg.body = ''.join(result)
+	# mail.send(msg)
+
+	# return render_template('thankyou.html')
+	return render_template('email_dump.html', leads=result)
 
 if __name__ == "__main__":
 	app.debug = True
